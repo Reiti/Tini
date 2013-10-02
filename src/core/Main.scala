@@ -9,6 +9,6 @@ package core
  */
 object Main {
   def main(args: Array[String]) {
-    println("おんにちは")
+    println("おにいちゃん")
   }
 }
