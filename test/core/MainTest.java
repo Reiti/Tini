@@ -7,7 +7,7 @@ package core;
  * Time: 15:17
  * Tests the main class.
  */
-public class TestTest {
+public class MainTest {
     @org.junit.Test
     public void testMain() throws Exception {
         Main.main(null);
