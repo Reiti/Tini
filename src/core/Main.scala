@@ -5,10 +5,10 @@ package core
  * User: NotReiti
  * Date: 02.10.13
  * Time: 13:35
- * To change this template use File | Settings | File Templates.
+ * The main class.
  */
-object Test {
+object Main {
   def main(args: Array[String]) {
-    println("test")
+    println("おんにちは")
   }
 }
