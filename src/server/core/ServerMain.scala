@@ -1,4 +1,4 @@
-package server
+package server.core
 
 import shared.Constants
 
@@ -16,6 +16,6 @@ object ServerMain {
   def main(args: Array[String]) = {
     println("こんにちは")
     new TiniServer(Constants.port) start()
-    println("starting client")
+    println("starting server")
   }
 }

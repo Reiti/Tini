@@ -1,4 +1,4 @@
-package client
+package client.core
 
 import shared.Constants
 
@@ -14,7 +14,9 @@ object ClientMain {
 
   def main(args: Array[String]) ={
     val client = new TiniClient(Constants.port)
-    client send "testy test"
-    client send "testy test 2"
+    while(true) {
+      val input = readLine("Input> ")
+      client send input
+    }
   }
 }
