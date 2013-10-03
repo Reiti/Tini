@@ -18,7 +18,7 @@ class TiniServer(port: Integer) extends Thread("TiniServer") {
     val listener = new ServerSocket(port)
     println("TiniServer started listening on port " + port)
     while (true) {
-      val thread = new ServerThread(listener accept)
+      val thread = new ServerThread(listener accept, this)
       clientThreadHandles += thread
       thread start()
     }

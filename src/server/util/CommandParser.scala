@@ -14,7 +14,7 @@ object CommandParser {
   def parse(command:String):Command = {
     val strings  = command.split(" ")
     strings.head.charAt(0) match {
-      case '/' => Command(strings.head.substring(0), strings.tail)
+      case '/' => Command(strings.head, strings.tail)
       case _ => Command("/say", strings)
     }
   }
