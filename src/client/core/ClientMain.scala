@@ -13,10 +13,6 @@ object ClientMain {
   val port = 11952
 
   def main(args: Array[String]) ={
-    val client = new TiniClient(Constants.port)
-    while(true) {
-      val input = readLine("Input> ")
-      client send input
-    }
+    new TiniClient(Constants.port)
   }
 }

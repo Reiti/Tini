@@ -28,13 +28,15 @@ class ServerThread(socket: Socket, tiniServer:TiniServer) extends Thread("Server
   def broadCast(com:Command):Unit = {
     val otherThreads = tiniServer.clientThreadHandles - this
     otherThreads foreach(_.executeCommand(com))
-
   }
 
   def executeCommand(com:Command):Unit = {
     println("Executing in:" + tiniServer.clientThreadHandles.indexOf(this))
     com.action match {
-      case "/say" => println(com.params(0))
+      case "/say" => {
+        com.params.foreach(out.println)
+        out flush()
+      }
       case _ => println(com.action)
     }
   }
