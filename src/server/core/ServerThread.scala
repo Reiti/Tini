@@ -34,7 +34,7 @@ class ServerThread(socket: Socket, tiniServer:TiniServer) extends Thread("Server
     println("Executing in:" + tiniServer.clientThreadHandles.indexOf(this))
     com.action match {
       case "/say" => {
-        com.params.foreach(out.println)
+        out print("\n"+com.params.mkString(" ")+"\nInput >")
         out flush()
       }
       case _ => println(com.action)
