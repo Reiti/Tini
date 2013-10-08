@@ -1,5 +1,7 @@
 package server.util
 
+import server.commands.{Command, Say, BaseCommand}
+
 /**
  * Created with IntelliJ IDEA.
  * User: NotReiti
@@ -8,19 +10,16 @@ package server.util
  * Parses commands. Nuff said.
  */
 
-//if (command.params forall(_ == params(command.params indexOf())))
-case class Command(action:String, params:Array[String]) {
-  override def equals(obj: scala.Any): Boolean = {
-    obj.isInstanceOf[Command] && obj.asInstanceOf[Command].action.equals(action) && obj.asInstanceOf[Command].params.mkString.equals(params.mkString)
-  }
-}
-
 object CommandParser {
   def parse(command:String):Command = {
     val strings  = command.split(" ")
-    strings.head.charAt(0) match {
-      case '/' => Command(strings.head, strings.tail)
-      case _ => Command("/say", strings)
+    if(strings.head.charAt(0) == '/') {
+      strings.head match {
+        case "/say" => new Say(strings.tail)
+        case _   => new BaseCommand(strings)
+      }
+    } else {
+      new Say(strings)
     }
   }
 }

@@ -20,16 +20,11 @@ class TiniClient(address: String, port: Integer) {
   val in = new BufferedReader(new InputStreamReader(socket.getInputStream))
 
   val receiveThread = new Thread("receiveThread") {
-    override def run() = {
-      while(true)
-        receive(in.readLine)
-    }
+    override def run() = Stream.continually(in.readLine()).foreach(receive)
   }.start()
+
   val inputThread = new Thread("inputThread") {
-    override def run() = {
-      while(true)
-        send(readLine(prompt))
-    }
+    override def run() = Stream.continually(readLine(prompt)).takeWhile(_ != null).foreach(send)
   }.start()
 
   def send(message: String) = {
