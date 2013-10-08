@@ -2,7 +2,7 @@ package server.core
 
 import java.net.{SocketException, Socket}
 import java.io._
-import server.util.{Command, CommandParser}
+import server.util.CommandParser
 import server.util.Command
 
 /**
@@ -34,8 +34,10 @@ class ServerThread(socket: Socket, tiniServer:TiniServer) extends Thread("Server
     println("Executing in:" + tiniServer.clientThreadHandles.indexOf(this))
     com.action match {
       case "/say" => {
-        out print("\n"+com.params.mkString(" ")+"\nInput >")
-        out flush()
+        if (com != null && com.params != null) {
+          out println com.params.mkString(" ")
+          out flush()
+        }
       }
       case _ => println(com.action)
     }

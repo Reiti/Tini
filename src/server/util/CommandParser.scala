@@ -11,13 +11,7 @@ package server.util
 //if (command.params forall(_ == params(command.params indexOf())))
 case class Command(action:String, params:Array[String]) {
   override def equals(obj: scala.Any): Boolean = {
-    obj match {
-      case command: Command =>
-        if (command.action.equals(action))
-          return command.params.mkString.equals(params.mkString)
-        false
-      case _ => false
-    }
+    obj.isInstanceOf[Command] && obj.asInstanceOf[Command].action.equals(action) && obj.asInstanceOf[Command].params.mkString.equals(params.mkString)
   }
 }
 

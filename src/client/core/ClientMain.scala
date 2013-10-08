@@ -12,7 +12,7 @@ import shared.Constants
 object ClientMain {
   val port = 11952
 
-  def main(args: Array[String]):Unit ={
+  def main(args: Array[String]):Unit = {
     new TiniClient(Constants.port)
   }
 }
