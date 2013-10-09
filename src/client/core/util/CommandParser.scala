@@ -1,24 +1,21 @@
-package server.util
+package client.core.util
 
-import server.commands.{Authenticate, Command, Say, BaseCommand}
-
+import client.core.commands._
 /**
  * Created with IntelliJ IDEA.
  * User: NotReiti
- * Date: 03.10.13
- * Time: 17:06
- * Parses commands. Nuff said.
+ * Date: 09.10.13
+ * Time: 09:56
+ * To change this template use File | Settings | File Templates.
  */
-
 object CommandParser {
   def parse(command:String):Command = {
     val strings  = command.split(" ")
-    if(strings.head.length()==0)
-       return new BaseCommand(strings)
     if(strings.head.charAt(0) == '/') {
       strings.head match {
         case "/say" => new Say(strings.tail)
-        case "/auth" => new Authenticate(strings.tail)
+        case "/set" => new Set(strings.tail)
+        case "/error" => new Error(strings.tail)
         case _   => new BaseCommand(strings)
       }
     } else {

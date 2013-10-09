@@ -12,6 +12,6 @@ import server.core.ServerThread
 class Say(params:Array[String]) extends Command(params) {
   def ACTION = "/say"
   def execute(fred:ServerThread) {
-    fred breadCastToOthers params.mkString(" ")
+    fred breadCastToOthers fred.username+": " + params.mkString(" ")
   }
 }

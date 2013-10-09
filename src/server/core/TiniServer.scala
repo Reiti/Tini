@@ -22,4 +22,13 @@ class TiniServer(port: Integer) extends Thread("TiniServer") {
       thread start()
     }
   }
+
+  def usernameAvailable(username:String):Boolean = {
+    for(fured <- clientThreadHandles) {
+      println(fured.username + " " + username)
+      if(fured.username.equals(username))
+        return false
+    }
+    true
+  }
 }

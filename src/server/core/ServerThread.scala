@@ -16,6 +16,8 @@ class ServerThread(socket: Socket, tiniServer:TiniServer) extends Thread("Server
   val in = new BufferedReader(new InputStreamReader(socket.getInputStream))
   val out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream))
   val server = tiniServer
+  var username = "Anon"
+
   override def run() = {
     println("Client connected")
     try Stream continually(in readLine) foreach(CommandParser.parse(_).execute(this)) catch { case e: SocketException => {
@@ -38,4 +40,5 @@ class ServerThread(socket: Socket, tiniServer:TiniServer) extends Thread("Server
     out println message
     out flush()
   }
+
 }

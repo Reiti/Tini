@@ -2,6 +2,7 @@ package client.core
 
 import java.net.Socket
 import java.io.{BufferedReader, PrintWriter, OutputStreamWriter, InputStreamReader}
+import client.core.util.CommandParser
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,13 +15,14 @@ class TiniClient(address: String, port: Integer) {
 
   def this(port: Integer) = this("localhost", port)
 
-  val prompt = "Input> "
+  var username = "Anon"
+  var prompt = username + ">"
   val socket = new Socket(address, port)
   val out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream))
   val in = new BufferedReader(new InputStreamReader(socket.getInputStream))
 
   val receiveThread = new Thread("receiveThread") {
-    override def run() = Stream.continually(in.readLine()).foreach(receive)
+    override def run() = Stream.continually(in.readLine()).map(CommandParser.parse).foreach(_.execute(TiniClient.this))
   }.start()
 
   val inputThread = new Thread("inputThread") {
@@ -32,5 +34,9 @@ class TiniClient(address: String, port: Integer) {
     out flush()
   }
 
-  def receive(message: String) = print("\r" + "Output> " + message + "\n" + prompt)
+  def log(message: String) {
+    System.out.print("\r"+message+"\n"+prompt)
+  }
+
+  def receive(message: String) = print("\r"+message+"\n"+ prompt)
 }
