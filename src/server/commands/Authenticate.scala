@@ -14,7 +14,6 @@ class Authenticate(params:Array[String]) extends Command(params){
   def ACTION = "/auth"
 
   def execute(fred: ServerThread) {
-    println(fred.server.usernameAvailable(params(0)))
     if(fred.server.usernameAvailable(params(0))) {
       fred.receive("/set username " + params(0))
       if(fred.username != Constants.standardUsername)

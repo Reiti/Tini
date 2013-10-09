@@ -13,6 +13,11 @@ object ClientMain {
   val port = 11952
 
   def main(args: Array[String]):Unit = {
-    new TiniClient(Constants.port)
+    val ip = readLine("Server IP: ")
+    println()
+    if(ip equals "")
+      new TiniClient(Constants.port)
+    else
+      new TiniClient(ip,Constants.port)
   }
 }
