@@ -1,4 +1,4 @@
-package client.core.commands
+package client.commands
 
 import client.core.TiniClient
 
@@ -7,12 +7,12 @@ import client.core.TiniClient
  * User: NotReiti
  * Date: 09.10.13
  * Time: 09:57
- * To change this template use File | Settings | File Templates.
+ * The command sent from the server, representing a message from another User.
  */
 class Say(params:Array[String]) extends Command(params){
-  def ACTION: Any = "/say"
+  def ACTION: String = "/say"
 
   def execute(client: TiniClient) {
-    client.receive(params.mkString(" "))
+    client.receive(params.head + ": " + params.tail.mkString(" "))
   }
 }

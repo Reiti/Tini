@@ -1,4 +1,4 @@
-package client.core.commands
+package client.commands
 
 
 import client.core.TiniClient
@@ -14,12 +14,12 @@ abstract case class Command(params:Array[String]) {
   override def equals(obj: scala.Any): Boolean = {
     obj.isInstanceOf[Command] && obj.asInstanceOf[Command].ACTION.equals(ACTION) && obj.asInstanceOf[Command].params.mkString.equals(params.mkString)
   }
-  def ACTION:Any
+  def ACTION: String
   def execute(client:TiniClient)
 }
 
 class BaseCommand(params:Array[String]) extends Command(params) {
-  def ACTION = params.head
+  def ACTION: String = params.head
   def execute(client:TiniClient) = {
     client.log("Unknown action from server: " + params.head)
   }

@@ -1,4 +1,4 @@
-package client.core.commands
+package client.commands
 
 import client.core.TiniClient
 
@@ -7,10 +7,10 @@ import client.core.TiniClient
  * User: NotReiti
  * Date: 09.10.13
  * Time: 10:33
- * To change this template use File | Settings | File Templates.
+ * The Command the server sends to represent an error.
  */
 class Error(params:Array[String]) extends Command(params){
-  def ACTION: Any = "/error"
+  def ACTION: String = "/error"
 
   def execute(client: TiniClient) {
     client.log("Error: " + params.mkString(" "))

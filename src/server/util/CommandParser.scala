@@ -13,10 +13,12 @@ import server.commands.{Authenticate, Command, Say, BaseCommand}
 object CommandParser {
   def parse(command:String):Command = {
     val strings  = command.split(" ")
-    if(strings.head.length()==0)
+
+    if(strings.head.length() == 0)
        return new BaseCommand(strings)
+
     if(strings.head.charAt(0) == '/') {
-      strings.head match {
+      strings.head.toLowerCase match {
         case "/say" => new Say(strings.tail)
         case "/auth" => new Authenticate(strings.tail)
         case _   => new BaseCommand(strings)

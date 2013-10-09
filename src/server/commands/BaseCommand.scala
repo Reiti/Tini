@@ -11,9 +11,9 @@ import server.core.ServerThread
  */
 abstract case class Command(params:Array[String]) {
   override def equals(obj: scala.Any): Boolean = {
-    obj.isInstanceOf[Command] && obj.asInstanceOf[Command].ACTION.equals(ACTION) && obj.asInstanceOf[Command].params.mkString.equals(params.mkString)
+    obj.isInstanceOf[Command] && obj.asInstanceOf[Command].ACTION == ACTION && obj.asInstanceOf[Command].params.mkString == params.mkString
   }
-  def ACTION:Any
+  def ACTION:String
   def execute(fred:ServerThread)
 }
 

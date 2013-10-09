@@ -7,10 +7,10 @@ import server.core.ServerThread
  * User: NotReiti
  * Date: 09.10.13
  * Time: 09:39
- * To change this template use File | Settings | File Templates.
+ * The command representing a authentication try from the client.
  */
 class Authenticate(params:Array[String]) extends Command(params){
-  def ACTION: Any = "/auth"
+  def ACTION = "/auth"
 
   def execute(fred: ServerThread) {
     println(fred.server.usernameAvailable(params(0)))

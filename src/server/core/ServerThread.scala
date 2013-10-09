@@ -3,7 +3,6 @@ package server.core
 import java.net.{SocketException, Socket}
 import java.io._
 import server.util.CommandParser
-import server.commands.BaseCommand
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,7 +19,7 @@ class ServerThread(socket: Socket, tiniServer:TiniServer) extends Thread("Server
 
   override def run() = {
     println("Client connected")
-    try Stream continually(in readLine) foreach(CommandParser.parse(_).execute(this)) catch { case e: SocketException => {
+    try Stream continually(in readLine) foreach(CommandParser.parse(_).execute(this)) catch { case e:SocketException => {
       println("Client disco.. disconnect")
       server.clientThreadHandles remove(server.clientThreadHandles indexOf this)
       println(server.clientThreadHandles.length)
