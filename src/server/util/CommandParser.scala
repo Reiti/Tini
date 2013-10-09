@@ -1,6 +1,7 @@
 package server.util
 
-import server.commands.{Authenticate, Command, Say, BaseCommand}
+import server.commands._
+import server.commands.Command
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,9 +19,12 @@ object CommandParser {
        return new BaseCommand(strings)
 
     if(strings.head.charAt(0) == '/') {
+      val tail: Array[String] = strings.tail
       strings.head.toLowerCase match {
-        case "/say" => new Say(strings.tail)
-        case "/auth" => new Authenticate(strings.tail)
+        case "/say" => new Say(tail)
+        case "/auth" => new Authenticate(tail)
+        case "/kick" => new Kick(tail)
+        case "/disconnect" => new Disconnect(tail)
         case _   => new BaseCommand(strings)
       }
     } else {

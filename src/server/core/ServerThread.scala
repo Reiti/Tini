@@ -21,7 +21,7 @@ class ServerThread(socket: Socket, tiniServer:TiniServer) extends Thread("Server
 
   override def run() = {
     new Authenticate(("Anon" + tiniServer.nextAnon() + " ").split(" ")).execute(ServerThread.this)
-    try Stream continually(in readLine) foreach(CommandParser.parse(_).execute(this)) catch { case e:SocketException => {
+    try Stream continually(in readLine) takeWhile(_ != null) foreach(CommandParser.parse(_).execute(this)) catch { case e:Exception => {
       println("Client disco.. disconnect")
       server.clientThreadHandles remove(server.clientThreadHandles indexOf this)
       println(server.clientThreadHandles.length)
@@ -42,4 +42,10 @@ class ServerThread(socket: Socket, tiniServer:TiniServer) extends Thread("Server
     out flush()
   }
 
+  def kick():Unit = {
+    server.clientThreadHandles remove(server.clientThreadHandles indexOf this)
+    in.close()
+    out.close()
+    socket.close()
+  }
 }

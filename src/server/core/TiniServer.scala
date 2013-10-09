@@ -28,7 +28,6 @@ class TiniServer(port: Integer) extends Thread("TiniServer") {
 
   def usernameAvailable(username:String):Boolean = {
     for(fured <- clientThreadHandles) {
-      println(fured.username + " " + username)
       if(fured.username.equals(username))
         return false
     }
@@ -38,5 +37,13 @@ class TiniServer(port: Integer) extends Thread("TiniServer") {
   def nextAnon():String = {
     anonNumber += 1
     anonNumber.toString
+  }
+
+  def getThreadByUserName(username:String):Option[ServerThread] = {
+    for(thread <- clientThreadHandles) {
+      if(thread.username equals username)
+        return Some(thread)
+    }
+    return None
   }
 }

@@ -12,10 +12,12 @@ object CommandParser {
   def parse(command:String):Command = {
     val strings  = command.split(" ")
     if(strings.head.charAt(0) == '/') {
+      val tail: Array[String] = strings.tail
       strings.head.toLowerCase match {
-        case "/say" => new Say(strings.tail)
-        case "/set" => new Set(strings.tail)
-        case "/error" => new Error(strings.tail)
+        case "/say" => new Say(tail)
+        case "/set" => new Set(tail)
+        case "/error" => new Error(tail)
+        case "/disconnect" => new Disconnect(tail)
         case _   => new BaseCommand(strings)
       }
     } else {
