@@ -9,4 +9,5 @@ package shared
  */
 object Constants {
   def port = 11952
+  def standardUsername = "Anon"
 }

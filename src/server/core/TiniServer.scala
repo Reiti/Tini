@@ -12,7 +12,10 @@ import scala.collection.mutable
  * The one listener of Tini to bind them all.
  */
 class TiniServer(port: Integer) extends Thread("TiniServer") {
+
   var clientThreadHandles:ArrayBuffer[ServerThread] = new ArrayBuffer[ServerThread] with mutable.SynchronizedBuffer[ServerThread]
+  var anonNumber:Integer = -1
+
   override def run() = {
     val listener = new ServerSocket(port)
     println("TiniServer started listening on port " + port)
@@ -30,5 +33,10 @@ class TiniServer(port: Integer) extends Thread("TiniServer") {
         return false
     }
     true
+  }
+
+  def nextAnon():String = {
+    anonNumber += 1
+    anonNumber.toString
   }
 }

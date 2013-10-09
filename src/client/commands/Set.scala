@@ -17,6 +17,7 @@ class Set(params:Array[String]) extends Command(params){
       case "username" => {
         client.username = params(1)
         client.prompt = params(1)+"> "
+        print("\r" + client.prompt)
       }
     }
   }

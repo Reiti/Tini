@@ -3,6 +3,8 @@ package server.core
 import java.net.{SocketException, Socket}
 import java.io._
 import server.util.CommandParser
+import server.commands.Authenticate
+import shared.Constants
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,10 +17,10 @@ class ServerThread(socket: Socket, tiniServer:TiniServer) extends Thread("Server
   val in = new BufferedReader(new InputStreamReader(socket.getInputStream))
   val out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream))
   val server = tiniServer
-  var username = "Anon"
+  var username = Constants.standardUsername
 
   override def run() = {
-    println("Client connected")
+    new Authenticate(("Anon" + tiniServer.nextAnon() + " ").split(" ")).execute(ServerThread.this)
     try Stream continually(in readLine) foreach(CommandParser.parse(_).execute(this)) catch { case e:SocketException => {
       println("Client disco.. disconnect")
       server.clientThreadHandles remove(server.clientThreadHandles indexOf this)
