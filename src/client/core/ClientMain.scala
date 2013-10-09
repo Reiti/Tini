@@ -7,7 +7,7 @@ import shared.Constants
  * User: Giymo11
  * Date: 03.10.13
  * Time: 10:41
- * The main used to start the client.
+ * The main class to start the client
  */
 object ClientMain {
   val port = 11952
