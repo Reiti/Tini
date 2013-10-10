@@ -28,6 +28,6 @@ class List(params:Array[String]) extends Command(params){
     var list:ArrayBuffer[String] = new ArrayBuffer[String]()
     for(thread <- threads)
       list += thread.username
-    fred.receive("/list Userlist: "+ list.mkString(" "))
+    fred.receive("/list UserList: "+ list.mkString(" "))
   }
 }
