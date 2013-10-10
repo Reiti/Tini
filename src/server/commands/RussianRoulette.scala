@@ -19,6 +19,6 @@ class RussianRoulette(params:Array[String]) extends Command(params) {
       fred.breadCastToAll("/say Server " + fred.username + " played russian roulette and shot himself.")
       new Disconnect(null).execute(fred)
     } else
-      fred.breadCastToAll("/say Server " + fred.username + " played russian roulette and survived. (" + random + ")")
+      fred.breadCastToAll("/say Server " + fred.username + " played russian roulette and survived.")
   }
 }

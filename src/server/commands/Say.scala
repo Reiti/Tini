@@ -12,6 +12,9 @@ import server.core.ServerThread
 class Say(params:Array[String]) extends Command(params) {
   def ACTION = "/say"
   def execute(fred:ServerThread) {
-    fred breadCastToOthers "/say" + " " + fred.username + " " + params.mkString(" ")
+    if(fred.tsundere)
+      new Tsundere(params).execute(fred)
+    else
+      fred breadCastToOthers "/say" + " " + fred.username + " " + params.mkString(" ")
   }
 }

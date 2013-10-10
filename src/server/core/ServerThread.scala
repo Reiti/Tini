@@ -18,6 +18,7 @@ class ServerThread(socket: Socket, tiniServer:TiniServer) extends Thread("Server
   val out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream))
   val server = tiniServer
   var username = Constants.standardUsername
+  var tsundere = false
 
   override def run() = {
     new Authenticate(("Anon" + tiniServer.nextAnon() + " ").split(" ")).execute(ServerThread.this)

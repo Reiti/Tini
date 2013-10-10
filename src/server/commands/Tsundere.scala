@@ -7,7 +7,7 @@ import server.core.ServerThread
  * User: NotReiti
  * Date: 10.10.13
  * Time: 10:05
- * To change this template use File | Settings | File Templates.
+ * The class enabling you to go /tsundere.
  */
 class Tsundere(params:Array[String]) extends Command(params) {
   def ACTION: String = "/tsundere"
@@ -25,7 +25,9 @@ class Tsundere(params:Array[String]) extends Command(params) {
         case '!' => tsun = firstChar+"-"+paramString+" " + "Baka!"
         case _ => tsun = firstChar+"-"+paramString+", baka!"
       }
-      new Say(Array(tsun)).execute(fred)
+      fred breadCastToOthers "/say" + " " + fred.username + " " + tsun
+    } else {
+      fred.tsundere = !fred.tsundere
     }
   }
 }
