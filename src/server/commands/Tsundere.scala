@@ -14,20 +14,25 @@ class Tsundere(params:Array[String]) extends Command(params) {
 
   def execute(fred: ServerThread) {
     if(params.length>0) {
-      val firstWord = params(0)
-      val lastWord = params(params.length-1)
-      val lastChar = lastWord.charAt(lastWord.length()-1)
-      val firstChar = params(0).charAt(0)
-      val paramString = params.mkString(" ")
-      var tsun = ""
-      lastChar match {
-        case '?' => tsun = firstChar+"-"+firstChar+"-"+paramString+" " + "Baka!"
-        case '!' => tsun = firstChar+"-"+paramString+" " + "Baka!"
-        case _ => tsun = firstChar+"-"+paramString+", baka!"
-      }
-      fred breadCastToOthers "/say" + " " + fred.username + " " + tsun
-    } else {
-      fred.tsundere = !fred.tsundere
+      toggleTsundere(fred)
+      new Say(params).execute(fred)
+      toggleTsundere(fred)
+    } else toggleTsundere(fred)
+  }
+
+  def toTsundere = {
+    val lastWord = params(params.length-1)
+    val lastChar = lastWord.charAt(lastWord.length()-1)
+    val firstChar = params(0).charAt(0)
+    val paramString = params.mkString(" ")
+    lastChar match {
+      case '?' => firstChar+"-"+firstChar+"-"+paramString+" " + "Baka!"
+      case '!' => firstChar+"-"+paramString+" " + "Baka!"
+      case _ => firstChar+"-"+paramString+", baka!"
     }
+  }
+
+  def toggleTsundere(fred: ServerThread) = {
+    fred.tsundere = !fred.tsundere
   }
 }

@@ -7,7 +7,7 @@ import client.core.TiniClient
  * User: NotReiti
  * Date: 10.10.13
  * Time: 11:58
- * To change this template use File | Settings | File Templates.
+ * The command used to send a whisper to a client.
  */
 class Whisper(params:Array[String]) extends Command(params) {
   def ACTION: String = "/whisper"

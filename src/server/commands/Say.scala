@@ -15,9 +15,13 @@ class Say(params:Array[String]) extends Command(params) {
     if(params == null || params.length == 0 || params(0)=="")
       return
 
+    var str: String = ""
+
     if(fred.tsundere)
-      new Tsundere(params).execute(fred)
+      str = new Tsundere(params).toTsundere
     else
-      fred breadCastToOthers "/say" + " " + fred.username + " " + params.mkString(" ")
+      str = params.mkString(" ")
+
+    fred breadCastToOthers "/say" + " " + fred.username + " " + str
   }
 }
