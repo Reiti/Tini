@@ -16,9 +16,6 @@ object CommandParser {
   def parse(command:String):Command = {
     val strings  = command.split(" ")
 
-    if(strings.head.length() == 0)
-       return new BaseCommand(strings)
-
     if(strings.head.charAt(0) == '/') {
       val tail: Array[String] = strings.tail
       strings.head.toLowerCase match {

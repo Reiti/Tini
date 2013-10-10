@@ -20,6 +20,7 @@ abstract case class Command(params:Array[String]) {
 class BaseCommand(params:Array[String]) extends Command(params) {
   def ACTION = params.head
   def execute(fred:ServerThread) = {
+    fred.receive("/error Invalid command")
     fred.log("unknown command: " + ACTION + " " + params.tail.mkString(" "))
   }
 }
