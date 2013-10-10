@@ -15,7 +15,7 @@ class RussianRoulette(params:Array[String]) extends Command(params) {
   def execute(fred: ServerThread) {
     val random:Integer = (Math.random() * 6.0).toInt
     println("Random: "+ random)
-    if(random == 0){
+    if(random == 0) {
       fred.breadCastToAll("/say Server " + fred.username + " played russian roulette and shot himself.")
       new Disconnect(null).execute(fred)
     } else

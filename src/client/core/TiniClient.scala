@@ -29,8 +29,10 @@ class TiniClient(address: String, port: Integer) {
 
   val receiveThread = new Thread("receiveThread") {
     override def run():Unit = try Stream.continually(in.readLine()).takeWhile(_ != null && !end).map(CommandParser.parse).foreach(_.execute(TiniClient.this))
-      catch { case e:SocketException => return
-      case io:IOException => return}
+      catch {
+        case e:SocketException => return
+       case io:IOException => return
+      }
   }.start()
 
   def send(message: String) = {

@@ -21,11 +21,7 @@ class ServerThread(socket: Socket, tiniServer:TiniServer) extends Thread("Server
 
   override def run() = {
     new Authenticate(("Anon" + tiniServer.nextAnon() + " ").split(" ")).execute(ServerThread.this)
-    try Stream continually(in readLine) takeWhile(_ != null) foreach(CommandParser.parse(_).execute(this)) catch { case e:Exception => {
-      println("Client disco.. disconnect")
-      server.clientThreadHandles remove(server.clientThreadHandles indexOf this)
-      println(server.clientThreadHandles.length)
-    } }
+    try Stream continually(in readLine) takeWhile(_ != null) foreach(CommandParser.parse(_).execute(this)) catch { case e:Exception => disconnect() }
   }
 
   def breadCastToOthers(message:String):Unit = {
@@ -40,12 +36,14 @@ class ServerThread(socket: Socket, tiniServer:TiniServer) extends Thread("Server
   }
 
   def receive(message:String) = {
-    out println message
-    out flush()
+    try {
+      out println message
+      out flush()
+    } catch { case e:Exception => disconnect() }
   }
 
-  def removeSelf():Unit = {
+  def disconnect() = {
     println("Client disco.. disconnect")
-    server.clientThreadHandles.remove(server.clientThreadHandles indexOf this)
+    server.clientThreadHandles remove(server.clientThreadHandles indexOf this)
   }
 }

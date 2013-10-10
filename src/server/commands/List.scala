@@ -8,7 +8,7 @@ import scala.collection.mutable.ArrayBuffer
  * User: NotReiti
  * Date: 10.10.13
  * Time: 09:17
- * To change this template use File | Settings | File Templates.
+ * Represents the command "/list".
  */
 class List(params:Array[String]) extends Command(params){
   def ACTION: String = "/list"
@@ -26,11 +26,8 @@ class List(params:Array[String]) extends Command(params){
   def userList(fred: ServerThread):Unit = {
     val threads = fred.server.clientThreadHandles
     var list:ArrayBuffer[String] = new ArrayBuffer[String]()
-    for(thread <- threads) {
+    for(thread <- threads)
       list += thread.username
-    }
-
     fred.receive("/list Userlist: "+ list.mkString(" "))
-
   }
 }

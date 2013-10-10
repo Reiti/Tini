@@ -7,12 +7,12 @@ import client.core.TiniClient
  * User: NotReiti
  * Date: 10.10.13
  * Time: 09:38
- * To change this template use File | Settings | File Templates.
+ * The command representing a list received from the server.
  */
 class List(params:Array[String]) extends Command(params){
   def ACTION: String = "/list"
 
   def execute(client: TiniClient) {
-    client.receive(params.mkString("\n"))
+    client.receive(params.mkString("\n\t"))
   }
 }
