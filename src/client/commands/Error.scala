@@ -13,6 +13,6 @@ class Error(params:Array[String]) extends Command(params){
   def ACTION: String = "/error"
 
   def execute(client: TiniClient) {
-    client.log("Error: " + params.mkString(" "))
+    client.error(params.mkString(" "))
   }
 }

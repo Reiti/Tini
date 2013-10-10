@@ -38,9 +38,7 @@ class TiniClient(address: String, port: Integer) {
     out flush()
   }
 
-  def error(message: String) = {
-    print("\r" + message)
-  }
+  def error(message: String) = print("\rERROR: " + message)
 
   def receive(message: String) = print("\r" + message + "\n" + prompt)
 

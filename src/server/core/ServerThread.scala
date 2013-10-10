@@ -33,6 +33,8 @@ class ServerThread(socket: Socket, tiniServer:TiniServer) extends Thread("Server
     otherThreads foreach(_ receive message)
   }
 
+  def breadCastToAll(message:String) = tiniServer.clientThreadHandles foreach(_ receive message)
+
   def log(message:String) = {
     println("LOG: " + message)
   }
@@ -42,10 +44,4 @@ class ServerThread(socket: Socket, tiniServer:TiniServer) extends Thread("Server
     out flush()
   }
 
-  def kick():Unit = {
-    server.clientThreadHandles remove(server.clientThreadHandles indexOf this)
-    in.close()
-    out.close()
-    socket.close()
-  }
 }

@@ -19,9 +19,8 @@ class Authenticate(params:Array[String]) extends Command(params){
       if(fred.username != Constants.standardUsername)
         fred.breadCastToOthers("/say Server " + fred.username + " changed his username to " + params(0))
       fred.username = params(0)
-
       return
     }
-    fred.receive("/error Username:"+ params(0)+" not available!")
+    fred.receive("/error Username: " + params(0) + " not available!")
   }
 }

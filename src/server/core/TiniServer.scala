@@ -39,11 +39,11 @@ class TiniServer(port: Integer) extends Thread("TiniServer") {
     anonNumber.toString
   }
 
-  def getThreadByUserName(username:String):Option[ServerThread] = {
+  def getThreadForUserName(username:String):Option[ServerThread] = {
     for(thread <- clientThreadHandles) {
       if(thread.username equals username)
         return Some(thread)
     }
-    return None
+    None
   }
 }

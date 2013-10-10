@@ -7,7 +7,7 @@ import client.core.TiniClient
  * User: NotReiti
  * Date: 09.10.13
  * Time: 16:33
- * To change this template use File | Settings | File Templates.
+ * The class representing the /disconnect received by the server.
  */
 class Disconnect(params:Array[String]) extends Command(params) {
   def ACTION: String = "/disconnect"
@@ -15,7 +15,7 @@ class Disconnect(params:Array[String]) extends Command(params) {
   def execute(client: TiniClient) {
     params(0) match{
       case "kick" => client.error("Kicked by: " + params(1))
-      case _ => client.error("Server disconnected.")
+      case _ => client.error("You disconnected.")
     }
     client.socket.close()
     client.in.close()
