@@ -17,6 +17,7 @@ class Kick(params:Array[String]) extends Command(params){
     val userToKick = fred.server.getThreadForUserName(params(0))
     userToKick match {
       case Some(user) => {
+        user removeSelf()
         user receive("/disconnect kick "+fred.username)
         fred breadCastToAll "/say Server " + user.username +" was kicked by " + fred.username
         //user kick()

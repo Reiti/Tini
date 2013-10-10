@@ -44,4 +44,8 @@ class ServerThread(socket: Socket, tiniServer:TiniServer) extends Thread("Server
     out flush()
   }
 
+  def removeSelf():Unit = {
+    println("Client disco.. disconnect")
+    server.clientThreadHandles.remove(server.clientThreadHandles indexOf this)
+  }
 }

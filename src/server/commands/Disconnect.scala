@@ -14,6 +14,7 @@ class Disconnect(params:Array[String]) extends Command(params){
 
   def execute(fred: ServerThread) {
     fred breadCastToOthers "/say Server " + fred.username + " disconnected."
+    fred removeSelf()
     fred receive "/disconnect server"
     //fred kick()
   }
