@@ -13,15 +13,14 @@ import shared.Constants
  * Time: 09:03
  * The thread responsible for one client connection.
  */
-class ServerThread(socket: Socket, channel:Channel) extends Thread("ServerThread") {
+case class ServerThread(socket: Socket, channel:Channel) extends Thread("ServerThread") {
   val in = new BufferedReader(new InputStreamReader(socket.getInputStream))
   val out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream))
-  val server = channel
   var username = Constants.standardUsername
   var tsundere = false
 
   override def run() = {
-    new Authenticate(("Anon" + server.nextAnon() + " ").split(" ")).execute(ServerThread.this)
+    new Authenticate(("Anon" + channel.nextAnon() + " ").split(" ")).execute(ServerThread.this)
     receive("/say Server You are now talking in channel " + channel.name)
     try Stream continually(in readLine) takeWhile(_ != null) foreach(CommandParser.parse(_).execute(this)) catch { case e:Exception => {
       log(e.getMessage)
@@ -30,11 +29,11 @@ class ServerThread(socket: Socket, channel:Channel) extends Thread("ServerThread
   }
 
   def breadCastToOthers(message:String):Unit = {
-    val otherThreads = server.clientThreadHandles - this
+    val otherThreads = channel.clientThreadHandles - this
     otherThreads foreach(_ receive message)
   }
 
-  def breadCastToAll(message:String) = server.clientThreadHandles foreach(_ receive message)
+  def breadCastToAll(message:String) = channel.clientThreadHandles foreach(_ receive message)
 
   def log(message:String) = {
     println("LOG: " + message)
@@ -49,6 +48,6 @@ class ServerThread(socket: Socket, channel:Channel) extends Thread("ServerThread
 
   def disconnect() = {
     println("Client disco.. disconnect")
-    server.clientThreadHandles remove(server.clientThreadHandles indexOf this)
+    channel.clientThreadHandles remove(channel.clientThreadHandles indexOf this)
   }
 }

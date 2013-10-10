@@ -14,18 +14,28 @@ import java.util
  */
 class TiniServer(port: Integer) extends Thread("TiniServer") {
 
-  var channelList = new util.ArrayList[Channel]
+  var channelList: ListBuffer[Channel] = new ListBuffer[Channel]
 
   override def run() = {
-    channelList.add(new Channel("default"))
+    channelList += Channel("default", this)
     val listener = new ServerSocket(port)
     println("TiniServer started listening on port " + port)
     while (true) {
-      val thread = new ServerThread(listener accept, channelList.get(0))
-      channelList.get(0).clientThreadHandles += thread
+      val thread = new ServerThread(listener accept, channelList(0))
+      channelList(0).clientThreadHandles += thread
       thread start()
     }
   }
 
+  def changeChannel(fred:ServerThread, channelName:String) = {
+    if(channelList.forall(_.name != channelName))
+      channelList += Channel(channelName, this)
 
+    val channel = channelList(channelList.indexWhere(_.name == channelName))
+    val socket = fred.socket
+    fred disconnect()
+    val thread = new ServerThread(socket, channel)
+    channel.clientThreadHandles += thread
+    thread start()
+  }
 }

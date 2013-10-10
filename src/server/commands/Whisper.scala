@@ -14,7 +14,7 @@ class Whisper(params:Array[String]) extends Command(params){
 
   def execute(fred: ServerThread) {
     if(params.length > 1) {
-      val user = fred.server.getThreadForUserName(params(0))
+      val user = fred.channel.getThreadForUserName(params(0))
       user match {
         case Some(x) => {
           var str: String = null

@@ -14,7 +14,7 @@ class Kick(params:Array[String]) extends Command(params){
   def ACTION: String = "/kick"
 
   def execute(fred: ServerThread) {
-    val userToKick = fred.server.getThreadForUserName(params(0))
+    val userToKick = fred.channel.getThreadForUserName(params(0))
     userToKick match {
       case Some(user) => {
         user receive("/disconnect kick " + fred.username)

@@ -24,7 +24,7 @@ class List(params:Array[String]) extends Command(params){
   }
 
   def userList(fred: ServerThread):Unit = {
-    val threads = fred.server.clientThreadHandles
+    val threads = fred.channel.clientThreadHandles
     var list:ArrayBuffer[String] = new ArrayBuffer[String]()
     for(thread <- threads)
       list += thread.username
