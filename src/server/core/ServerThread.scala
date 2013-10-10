@@ -22,7 +22,10 @@ class ServerThread(socket: Socket, tiniServer:TiniServer) extends Thread("Server
 
   override def run() = {
     new Authenticate(("Anon" + tiniServer.nextAnon() + " ").split(" ")).execute(ServerThread.this)
-    try Stream continually(in readLine) takeWhile(_ != null) foreach(CommandParser.parse(_).execute(this)) catch { case e:Exception => disconnect() }
+    try Stream continually(in readLine) takeWhile(_ != null) foreach(CommandParser.parse(_).execute(this)) catch { case e:Exception => {
+      log(e.getMessage)
+      disconnect()
+    } }
   }
 
   def breadCastToOthers(message:String):Unit = {

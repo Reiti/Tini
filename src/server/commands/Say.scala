@@ -12,6 +12,9 @@ import server.core.ServerThread
 class Say(params:Array[String]) extends Command(params) {
   def ACTION = "/say"
   def execute(fred:ServerThread) {
+    if(params == null || params.length == 0 || params(0)=="")
+      return
+
     if(fred.tsundere)
       new Tsundere(params).execute(fred)
     else
