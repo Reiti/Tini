@@ -29,6 +29,7 @@ object CommandParser {
         case "/russianroulette" => new RussianRoulette(tail)
         case "/list" => new List(tail)
         case "/tsundere" => new Tsundere(tail)
+        case "/whisper" => new Whisper(tail)
         case _   => new BaseCommand(strings)
       }
     } else {

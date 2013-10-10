@@ -19,6 +19,7 @@ object CommandParser {
         case "/error" => new Error(tail)
         case "/disconnect" => new Disconnect(tail)
         case "/list" => new List(tail)
+        case "/whisper" => new Whisper(tail)
         case _   => new BaseCommand(strings)
       }
     } else {

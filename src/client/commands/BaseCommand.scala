@@ -21,6 +21,6 @@ abstract case class Command(params:Array[String]) {
 class BaseCommand(params:Array[String]) extends Command(params) {
   def ACTION: String = params.head
   def execute(client:TiniClient) = {
-    client.log("Unknown action from server: " + params.head)
+    client.receive(params.mkString(" "))
   }
 }
