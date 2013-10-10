@@ -25,6 +25,7 @@ object CommandParser {
         case "/auth" => new Authenticate(tail)
         case "/kick" => new Kick(tail)
         case "/disconnect" => new Disconnect(tail)
+        case "/russianroulette" => new RussianRoulette(tail)
         case _   => new BaseCommand(strings)
       }
     } else {

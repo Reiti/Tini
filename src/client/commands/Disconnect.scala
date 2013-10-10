@@ -15,7 +15,7 @@ class Disconnect(params:Array[String]) extends Command(params) {
   def execute(client: TiniClient) {
     params(0) match{
       case "kick" => client.error("Kicked by: " + params(1))
-      case _ => client.error("You disconnected.")
+      case _ => client.error("You got disconnected.")
     }
     client.socket.close()
     client.in.close()
