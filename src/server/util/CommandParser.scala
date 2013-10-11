@@ -2,7 +2,6 @@ package server.util
 
 import server.commands._
 import server.commands.Command
-import scala.collection.mutable
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,6 +1,6 @@
 package server.core
 
-import java.net.{SocketException, Socket}
+import java.net.Socket
 import java.io._
 import server.util.CommandParser
 import server.commands.Authenticate
@@ -49,5 +49,9 @@ case class ServerThread(socket: Socket, channel:Channel) extends Thread("ServerT
   def disconnect() = {
     println("Client disco.. disconnect")
     channel.clientThreadHandles remove(channel.clientThreadHandles indexOf this)
+    try {
+      in.close()
+      out.close()
+    } catch { case e:Exception => log(e.getMessage) }
   }
 }
