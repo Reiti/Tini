@@ -35,4 +35,15 @@ case class Channel(name: String, channelManager: TiniServer) {
     }
     None
   }
+
+  def connect(fred: ServerThread) {
+    fred.channel.clientThreadHandles += fred
+    fred.breadCastToOthers("/me " + fred.username + " connected to this channel (" + fred.channel.name + ").")
+    fred.receive("/say Server You connected to channel " + fred.channel.name + ".")
+  }
+
+  def disconnect(fred: ServerThread) {
+    fred.channel.clientThreadHandles -= fred
+    fred.breadCastToAll("/me " + fred.username + " disconnected from this channel.")
+  }
 }

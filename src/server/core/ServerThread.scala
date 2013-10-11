@@ -21,7 +21,7 @@ case class ServerThread(socket: Socket, var channel:Channel) extends Thread("Ser
 
   override def run() = {
     new Authenticate(("Anon" + channel.nextAnon() + " ").split(" ")).execute(ServerThread.this)
-    receive("/say Server You are now talking in channel " + channel.name)
+    channel.connect(this)
     try Stream continually(in readLine) takeWhile(_ != null) foreach(CommandParser.parse(_).execute(this)) catch { case e:Exception => {
       log(e.getMessage)
       disconnect()
@@ -48,12 +48,12 @@ case class ServerThread(socket: Socket, var channel:Channel) extends Thread("Ser
 
   def disconnect():Unit = {
     println("Client disco.. disconnect")
-    breadCastToOthers("/say Server " + username + " disconnected.")
+    channel.disconnect(this)
     receive("/disconnect server")
-    channel.clientThreadHandles remove(channel.clientThreadHandles indexOf this)
     try {
       in.close()
       out.close()
+      socket.close()
     } catch { case e:Exception => log(e.getMessage) }
   }
 }

@@ -17,13 +17,10 @@ class Channel(params:Array[String]) extends Command(params) {
     val channelName = params(0)
 
     if(channelList.forall(_.name != channelName))
-      channelList += Channel(channelName, fred.channel.channelManager)
+      channelList += server.core.Channel(channelName, fred.channel.channelManager)
 
-    fred.channel.clientThreadHandles -= fred
-    fred.breadCastToAll("/me " + fred.username + " disconnected from this channel.")
+    fred.channel.disconnect(fred)
     fred.channel = channelList(channelList.indexWhere(_.name == channelName))
-    fred.channel.clientThreadHandles += fred
-    fred.breadCastToOthers("/me " + fred.username + " connected to this channel (" + fred.channel.name + ").")
-    fred.receive("/say Server You connected to channel " + fred.channel.name + ".")
+    fred.channel.connect(fred)
   }
 }
