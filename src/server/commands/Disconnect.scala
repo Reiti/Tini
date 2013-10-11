@@ -13,8 +13,6 @@ class Disconnect(params:Array[String]) extends Command(params){
   def ACTION: String = "/disconnect"
 
   def execute(fred: ServerThread) {
-    fred breadCastToOthers "/say Server " + fred.username + " disconnected."
     fred disconnect()
-    fred receive "/disconnect server"
   }
 }

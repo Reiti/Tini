@@ -24,16 +24,4 @@ class TiniServer(port: Integer) extends Thread("TiniServer") {
       thread start()
     }
   }
-
-  def changeChannel(fred:ServerThread, channelName:String) = {
-    if(channelList.forall(_.name != channelName))
-      channelList += Channel(channelName, this)
-
-    val channel = channelList(channelList.indexWhere(_.name == channelName))
-    val socket = fred.socket
-    fred disconnect()
-    val thread = new ServerThread(socket, channel)
-    channel.clientThreadHandles += thread
-    thread start()
-  }
 }

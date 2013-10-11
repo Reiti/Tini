@@ -13,7 +13,7 @@ import shared.Constants
  * Time: 09:03
  * The thread responsible for one client connection.
  */
-case class ServerThread(socket: Socket, channel:Channel) extends Thread("ServerThread") {
+case class ServerThread(socket: Socket, var channel:Channel) extends Thread("ServerThread") {
   val in = new BufferedReader(new InputStreamReader(socket.getInputStream))
   val out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream))
   var username = Constants.standardUsername
@@ -46,8 +46,10 @@ case class ServerThread(socket: Socket, channel:Channel) extends Thread("ServerT
     } catch { case e:Exception => disconnect() }
   }
 
-  def disconnect() = {
+  def disconnect():Unit = {
     println("Client disco.. disconnect")
+    breadCastToOthers("/say Server " + username + " disconnected.")
+    receive("/disconnect server")
     channel.clientThreadHandles remove(channel.clientThreadHandles indexOf this)
     try {
       in.close()

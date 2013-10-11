@@ -1,6 +1,6 @@
 package server.commands
 
-import server.core.ServerThread
+import server.core.{Channel, ServerThread}
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,6 +13,17 @@ class Channel(params:Array[String]) extends Command(params) {
   def ACTION: String = "/channel"
 
   def execute(fred: ServerThread) {
-    fred.channel.channelManager.changeChannel(fred, params(0))
+    val channelList = fred.channel.channelManager.channelList
+    val channelName = params(0)
+
+    if(channelList.forall(_.name != channelName))
+      channelList += Channel(channelName, fred.channel.channelManager)
+
+    fred.channel.clientThreadHandles -= fred
+    fred.breadCastToAll("/me " + fred.username + " disconnected from this channel.")
+    fred.channel = channelList(channelList.indexWhere(_.name == channelName))
+    fred.channel.clientThreadHandles += fred
+    fred.breadCastToOthers("/me " + fred.username + " connected to this channel (" + fred.channel.name + ").")
+    fred.receive("/say Server You connected to channel " + fred.channel.name + ".")
   }
 }
