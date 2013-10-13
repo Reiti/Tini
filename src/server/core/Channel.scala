@@ -15,18 +15,9 @@ case class Channel(name: String, channelManager: TiniServer) {
   var clientThreadHandles:ArrayBuffer[ServerThread] = new ArrayBuffer[ServerThread] with mutable.SynchronizedBuffer[ServerThread]
   var anonNumber:Integer = -1
 
-  def usernameAvailable(username:String):Boolean = {
-    for(fured <- clientThreadHandles) {
-      if(fured.username.equals(username))
-        return false
-    }
-    true
-  }
+  def usernameAvailable(username:String):Boolean = clientThreadHandles.forall(_.username != username)
 
-  def nextAnon():String = {
-    anonNumber += 1
-    anonNumber.toString
-  }
+  def nextAnon():String = anonNumber.+=(1).toString
 
   def getThreadForUserName(username:String):Option[ServerThread] = {
     for(thread <- clientThreadHandles) {

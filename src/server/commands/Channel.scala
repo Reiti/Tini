@@ -1,6 +1,6 @@
 package server.commands
 
-import server.core.{Channel, ServerThread}
+import server.core.ServerThread
 
 /**
  * Created with IntelliJ IDEA.

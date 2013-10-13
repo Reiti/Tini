@@ -28,16 +28,11 @@ case class ServerThread(socket: Socket, var channel:Channel) extends Thread("Ser
     } }
   }
 
-  def breadCastToOthers(message:String):Unit = {
-    val otherThreads = channel.clientThreadHandles - this
-    otherThreads foreach(_ receive message)
-  }
+  def breadCastToOthers(message:String):Unit = (channel.clientThreadHandles - this) foreach(_ receive message)
 
   def breadCastToAll(message:String) = channel.clientThreadHandles foreach(_ receive message)
 
-  def log(message:String) = {
-    println("LOG: " + message)
-  }
+  def log(message:String) = println("LOG: " + message)
 
   def receive(message:String) = {
     try {
