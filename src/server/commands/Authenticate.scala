@@ -16,9 +16,9 @@ class Authenticate(params:Array[String]) extends Command(params){
   def execute(fred: ServerThread) {
     if(fred.channel.usernameAvailable(params(0))) {
       fred.receive("/set username " + params(0))
-      if(fred.username != Constants.standardUsername)
-        fred.breadCastToOthers("/say Server " + fred.username + " changed his username to " + params(0))
-      fred.username = params(0)
+      if(fred.user.name != Constants.standardUsername)
+        fred.breadCastToOthers("/say Server " + fred.user + " changed his username to " + fred.channel.channelManager.getUser(params(0)))
+      fred.user = fred.channel.channelManager.getUser(params(0))
       return
     }
     fred.receive("/error Username: " + params(0) + " not available!")

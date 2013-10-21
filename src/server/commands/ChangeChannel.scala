@@ -9,7 +9,7 @@ import server.core.ServerThread
  * Time: 15:39
  * The class representing the command "/channel" to change channel.
  */
-class Channel(params:Array[String]) extends Command(params) {
+class ChangeChannel(params:Array[String]) extends Command(params) {
   def ACTION: String = "/channel"
 
   def execute(fred: ServerThread) {

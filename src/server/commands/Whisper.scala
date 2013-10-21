@@ -22,7 +22,7 @@ class Whisper(params:Array[String]) extends Command(params){
             str = new Tsundere(params.tail).toTsundere
           else
             str = params.tail.mkString(" ")
-          x.receive("/whisper " + fred.username + " " + str)
+          x.receive("/whisper " + fred.user.name + " " + str)
         }
         case None => fred.receive("/error Invalid username!")
       }

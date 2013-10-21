@@ -2,6 +2,7 @@ package server.core
 
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable
+import shared.Constants
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,26 +16,33 @@ case class Channel(name: String, channelManager: TiniServer) {
   var clientThreadHandles:ArrayBuffer[ServerThread] = new ArrayBuffer[ServerThread] with mutable.SynchronizedBuffer[ServerThread]
   var anonNumber:Integer = -1
 
-  def usernameAvailable(username:String):Boolean = clientThreadHandles.forall(_.username != username)
+  def usernameAvailable(username:String):Boolean = clientThreadHandles.forall(_.user.name != username)
 
-  def nextAnon():String = anonNumber.+=(1).toString
+  def nextAnon():Integer = {
+    anonNumber+=1
+    anonNumber
+  }
 
   def getThreadForUserName(username:String):Option[ServerThread] = {
     for(thread <- clientThreadHandles) {
-      if(thread.username equals username)
+      if(thread.user.name equals username)
         return Some(thread)
     }
     None
   }
 
+  def getPrivilegeFor(username:String): Privilege = {
+    Constants.standardPrivilege
+  }
+
   def connect(fred: ServerThread) {
     fred.channel.clientThreadHandles += fred
-    fred.breadCastToOthers("/me " + fred.username + " connected to this channel (" + fred.channel.name + ").")
+    fred.breadCastToOthers("/me " + fred.user + " connected to this channel (" + fred.channel.name + ").")
     fred.receive("/say Server You connected to channel " + fred.channel.name + ".")
   }
 
   def disconnect(fred: ServerThread) {
     fred.channel.clientThreadHandles -= fred
-    fred.breadCastToAll("/me " + fred.username + " disconnected from this channel.")
+    fred.breadCastToAll("/me " + fred.user + " disconnected from this channel.")
   }
 }

@@ -27,7 +27,7 @@ object CommandParser {
         case "/tsundere" => new Tsundere(tail)
         case "/whisper" => new Whisper(tail)
         case "/me" => new Me(tail)
-        case "/channel" => new Channel(tail)
+        case "/channel" => new ChangeChannel(tail)
         case _   => new BaseCommand(strings)
       }
     } else {

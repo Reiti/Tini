@@ -16,9 +16,9 @@ class RussianRoulette(params:Array[String]) extends Command(params) {
     val random:Integer = (Math.random() * 6.0).toInt
     println("Random: "+ random)
     if(random == 0) {
-      fred.breadCastToAll("/me " + fred.username + " played russian roulette and shot himself.")
+      fred.breadCastToAll("/me " + fred.user + " played russian roulette and shot himself.")
       new Disconnect(null).execute(fred)
     } else
-      fred.breadCastToAll("/me " + fred.username + " played russian roulette and survived.")
+      fred.breadCastToAll("/me " + fred.user + " played russian roulette and survived.")
   }
 }

@@ -14,14 +14,17 @@ class Kick(params:Array[String]) extends Command(params){
   def ACTION: String = "/kick"
 
   def execute(fred: ServerThread) {
-    val userToKick = fred.channel.getThreadForUserName(params(0))
-    userToKick match {
-      case Some(user) => {
-        user receive("/disconnect kick " + fred.username)
-        user disconnect()
-        fred breadCastToAll "/say Server " + user.username +" was kicked by " + fred.username
+    if(fred.user.getPrivilegeForChannel(fred.channel).admin) {
+      val userToKick = fred.channel.getThreadForUserName(params(0))
+      userToKick match {
+        case Some(kickFred) => {
+          kickFred receive("/disconnect kick " + fred.user.name)
+          kickFred disconnect()
+          fred breadCastToAll "/say Server " + kickFred.user + " was kicked by " + fred.user
+        }
+        case None => fred.receive("/error Invalid username!")
       }
-      case None => fred.receive("/error Invalid username!")
-    }
+    } else
+      fred.receive("/error Too little permissions.")
   }
 }

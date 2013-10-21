@@ -13,6 +13,6 @@ class Me(params:Array[String]) extends Command(params){
   def ACTION: String = "/me"
 
   def execute(fred: ServerThread) {
-    fred breadCastToOthers ACTION + " " + fred.username + " " + params.mkString(" ")
+    fred breadCastToOthers ACTION + " " + fred.user.name + " " + params.mkString(" ")
   }
 }

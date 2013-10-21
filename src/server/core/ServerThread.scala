@@ -16,7 +16,7 @@ import shared.Constants
 case class ServerThread(socket: Socket, var channel:Channel) extends Thread("ServerThread") {
   val in = new BufferedReader(new InputStreamReader(socket.getInputStream))
   val out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream))
-  var username = Constants.standardUsername
+  var user = channel.channelManager.getUser(Constants.standardUsername)
   var tsundere = false
 
   override def run() = {

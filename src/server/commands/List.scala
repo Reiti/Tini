@@ -27,7 +27,7 @@ class List(params:Array[String]) extends Command(params){
     val threads = fred.channel.clientThreadHandles
     var list:ArrayBuffer[String] = new ArrayBuffer[String]()
     for(thread <- threads)
-      list += thread.username
+      list += thread.user.toString
     fred.receive("/list UserList: "+ list.mkString(" "))
   }
 }

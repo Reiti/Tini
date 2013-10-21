@@ -22,6 +22,6 @@ class Say(params:Array[String]) extends Command(params) {
     else
       str = params.mkString(" ")
 
-    fred breadCastToOthers "/say" + " " + fred.username + " " + str
+    fred breadCastToOthers "/say" + " " + fred.user.name + " " + str
   }
 }
